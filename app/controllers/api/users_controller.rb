@@ -17,20 +17,32 @@ class Api::UsersController < ApplicationController
     p "In create"
     p "params: #{params}"
 
+    user = User.new({:email => params[:email]})
+    user.save
 
-    # @result =  Braintree::Transaction.sale(
-    #   amount: "0.005",
-    #   payment_method_nonce: params[:payment_method_nonce],
-    #               customer: {
-    #                 # first_name: params[:first_name],
-    #                 # last_name: params[:last_name],
-    #                 email: params[:email],
-    #               },
-    #               options: {
-    #                 store_in_vault: true
-    #               })
+    p "user id: #{user.id}"
+
+    result = Braintree::Customer.create(
+      :email => params[:email], 
+      :id => user.id, 
+      :payment_method_nonce => params[:payment_method_nonce]
+    )
+
+    p "result: #{result}" 
+
   end
 
+  def charge 
+    p "In charge: params: #{params}"
+
+    result = Braintree::Transaction.sale(
+      :amount => ".01",
+      :customer_id => params[:id], 
+      :options => {
+          :submit_for_settlement => true
+      }
+    )
+  end
 
 
   private

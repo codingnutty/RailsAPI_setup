@@ -1,3 +1,4 @@
 config/initializers/braintree.rb
 log/
 tmp/
+.sqlite3
