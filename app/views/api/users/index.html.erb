@@ -1,20 +1,30 @@
 
+<form id="checkout" method="post" action="/api/users">
+  <div id="payment-form"></div>
+  <input type="submit" value="save">
+</form>
+
 <script src="https://js.braintreegateway.com/v2/braintree.js"></script>
-%h1 Braintree transaction
-=form_tag '/charge_client', role: 'form' do
-  .form-group
-    = label_tag 'Cardholder name'
-    = text_field_tag 'Cardholder name', nil, name: nil, placeholder: 'Cardholder name', data: {'braintree-name' => 'cardholder_name'}, class: 'form-control'
-  .form-group
-    = label_tag 'Card number'
-    = text_field_tag 'Card number', nil, name: nil, placeholder: 'Card number', data: {'braintree-name' => 'number'}, class: 'form-control'
-  .form-group
-    = label_tag 'Cvv number'
-    = text_field_tag 'Cvv number', nil, name: nil, placeholder: 'CVV', data: {'braintree-name' => 'cvv'}, class: 'form-control'
-  .form-group
-    = label_tag 'Month'
-    = text_field_tag 'Month', nil, name: nil, placeholder: 'Month in MM format', data: {'braintree-name' => 'expiration_month'}, class: 'form-control'
-    = label_tag 'Year'
-    = text_field_tag 'Year', nil, name: nil, placeholder: 'Year in YY format', data: {'braintree-name' => 'expiration_year'}, class: 'form-control'
-  .form-group
-    =submit_tag 'Charge', class: 'btn btn-default'
+
+<script>
+  braintree.setup(
+    // Replace this with a client token from your server
+    "<%= @client_token %>",
+    "dropin", {
+      container: "payment-form"
+    });
+</script>
+
+<!-- </pre>
+<h1>Braintree Credit Card Transaction Form</h1>
+<div><form id="braintree- payment-form" action="/create_transaction" method="POST"><label>Card Number</label>
+<input type="text" autocomplete="off" size="20" data-encrypted-name="number" />
+
+<label>CVV</label>
+<input type="text" autocomplete="off" size="4" data-encrypted-name="cvv" />
+
+<label>Expiration (MM/YYYY)</label>
+<input type="text" name="month" size="2" /> / <input type="text" name="year" size="4" />
+
+<input id="submit" type="submit" /></form></div>
+<pre> -->
