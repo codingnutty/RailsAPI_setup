@@ -23,21 +23,22 @@ class Api::UsersController < ApplicationController
     p "user id: #{user.id}"
 
     result = Braintree::Customer.create(
-      :email => params[:email], 
-      :id => user.id, 
+      :email => params[:email],
+      :id => user.id,
       :payment_method_nonce => params[:payment_method_nonce]
     )
 
-    p "result: #{result}" 
+    p "result: #{result}"
+    render "api/users/thank_you"
 
   end
 
-  def charge 
+  def charge
     p "In charge: params: #{params}"
 
     result = Braintree::Transaction.sale(
       :amount => ".01",
-      :customer_id => params[:id], 
+      :customer_id => params[:id],
       :options => {
           :submit_for_settlement => true
       }
